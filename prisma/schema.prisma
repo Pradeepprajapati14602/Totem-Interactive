@@ -1,0 +1,37 @@
+
+generator client {
+  provider = "prisma-client-js"
+  previewFeatures = ["postgresqlExtensions"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Agent {
+  id        String   @id @default(uuid())
+  name      String
+  metadata  Json?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  memories  Memory[]
+
+  @@index([createdAt])
+}
+
+model Memory {
+  id        String                 @id @default(uuid())
+  agentId   String
+  content   String                 @db.Text
+  embedding String?                @db.Text
+  metadata  Json?
+  strength  Float                  @default(1.0)
+  createdAt DateTime               @default(now())
+  updatedAt DateTime               @updatedAt
+  Agent     Agent                  @relation(fields: [agentId], references: [id], onDelete: Cascade)
+
+  @@index([agentId])
+  @@index([createdAt])
+  @@index([strength])
+}
