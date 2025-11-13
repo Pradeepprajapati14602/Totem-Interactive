@@ -432,3 +432,6 @@ For issues and questions:
 ---
 
 Built with Next.js, Prisma, and Gemini AI
+
+
+![alt text](diagram-export-11-13-2025-1_37_23-AM.png)
